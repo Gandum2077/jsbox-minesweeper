@@ -227,7 +227,7 @@ function defineTimer() {
       text: $l10n("TIME_USED") + "0"
     },
     layout: (make, view) => {
-      make.size.equalTo($size(150, 50));
+      make.size.equalTo($size(100, 50));
       make.bottom.equalTo($("matrix").top).inset(5);
       make.centerX.equalTo(view.super).multipliedBy(2 / 3);
     },
@@ -259,7 +259,7 @@ function defineCounter(mines) {
       }
     },
     layout: (make, view) => {
-      make.size.equalTo($size(150, 50));
+      make.size.equalTo($size(100, 50));
       make.bottom.equalTo($("matrix").top).inset(5);
       make.centerX.equalTo(view.super).multipliedBy(4 / 3);
     },

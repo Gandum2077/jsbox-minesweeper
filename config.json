@@ -2,13 +2,13 @@
   "info": {
     "name": "jsbox-minesweeper",
     "url": "",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "author": "Gandum2077",
     "website": "https://github.com/Gandum2077/jsbox-minesweeper",
     "types": 1
   },
   "settings": {
-    "minSDKVer": "2.2.0",
+    "minSDKVer": "2.1.0",
     "minOSVer": "13.0.0",
     "idleTimerDisabled": false,
     "autoKeyboardEnabled": false,
