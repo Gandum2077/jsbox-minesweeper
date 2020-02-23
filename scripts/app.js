@@ -54,7 +54,7 @@ function getData(struct) {
   return struct.map(n => {
     return {
       background: {
-        bgcolor: n.demined ? $color("#ddf") : $color("blue")
+        bgcolor: n.demined ? $color("#ddf") : $color("#8FBC8F")
       },
       mine_image: {
         image: NUMBER_IMAGES[n.number],
@@ -127,7 +127,8 @@ function defineMatrix({ mines, columns, rows }) {
       data: getData(Array(columns * rows).fill({})),
       template: {
         props: {
-          borderWidth: 1
+          borderWidth: 1,
+          borderColor: $color("white")
         },
         views: [
           {
@@ -142,7 +143,10 @@ function defineMatrix({ mines, columns, rows }) {
             props: {
               id: "mine_image"
             },
-            layout: $layout.fill
+            layout: (make, view) => {
+              make.center.equalTo(view.super);
+              make.edges.insets($insets(3, 3, 3, 3));
+            }
           },
           {
             type: "image",
@@ -151,7 +155,10 @@ function defineMatrix({ mines, columns, rows }) {
               tintColor: $color("#b00"),
               symbol: "flag.fill"
             },
-            layout: $layout.fill
+            layout: (make, view) => {
+              make.center.equalTo(view.super);
+              make.edges.insets($insets(3, 3, 3, 3));
+            }
           }
         ]
       }
