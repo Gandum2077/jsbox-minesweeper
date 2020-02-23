@@ -87,8 +87,8 @@ function updateStruct({ struct, index, type = "mine" }) {
 }
 
 function roundClick({ struct, index }) {
-  const column = struct[index].column
-  const row = struct[index].row
+  const column = struct[index].column;
+  const row = struct[index].row;
   const surroundedBlocks = struct.filter(n => {
     if (
       n.column >= column - 1 &&
@@ -104,12 +104,11 @@ function roundClick({ struct, index }) {
   struct[index].flagSet = false;
   for (let i of surroundedBlocks) {
     if (i.number === 0) {
-      roundClick({ struct, index: i.index})
+      roundClick({ struct, index: i.index });
     } else {
-      updateStruct({ struct, index: i.index })
+      updateStruct({ struct, index: i.index });
     }
   }
-  
 }
 
 function defineMatrix({ mines, columns, rows }) {
@@ -170,14 +169,13 @@ function defineMatrix({ mines, columns, rows }) {
             rows,
             selectedIndex: indexPath.item
           });
-          data = getData(struct)[indexPath.item]
+          data = getData(struct)[indexPath.item];
           gameStarted = true;
           START_TIME = new Date().getTime();
           RUN_TIMER = true;
         }
         if (data.demined) return;
         if (data.flagSet) return;
-        console.log(data)
         if (data.number === 9) {
           showAllMines(indexPath.item);
           finish(false);
@@ -219,7 +217,7 @@ function defineTimer() {
       id: "timer",
       bgcolor: $color("#eee"),
       align: $align.center,
-      text: "用时：0"
+      text: $l10n("TIME_USED") + "0"
     },
     layout: (make, view) => {
       make.size.equalTo($size(150, 50));
@@ -231,7 +229,8 @@ function defineTimer() {
         setInterval(() => {
           if (START_TIME && RUN_TIMER) {
             sender.text =
-              "用时：" + Math.floor((new Date().getTime() - START_TIME) / 1000);
+              $l10n("TIME_USED") +
+              Math.floor((new Date().getTime() - START_TIME) / 1000);
           }
         }, 100);
       }
@@ -247,7 +246,7 @@ function defineCounter(mines) {
       id: "counter",
       bgcolor: $color("#eee"),
       align: $align.center,
-      text: "剩余：" + mines,
+      text: $l10n("REMAIN") + mines,
       info: {
         initial_mines: mines
       }
@@ -272,16 +271,16 @@ function checkWin(mineNumber) {
 function finish(win = true) {
   RUN_TIMER = false;
   $ui.alert({
-    title: win ? "你赢了！" : "你输了！",
+    title: win ? $l10n("WIN") : $l10n("LOSE"),
     actions: [
       {
-        title: "退出",
+        title: $l10n("EXIT"),
         handler: function() {
           $app.close();
         }
       },
       {
-        title: "再来一局",
+        title: $l10n("AGAIN"),
         handler: function() {
           $addin.restart();
         }
@@ -295,7 +294,7 @@ function updateCounter() {
   const flagNumber = data.filter(n => n.flagSet).length;
   const counter = $("counter");
   const initial_mines = counter.info.initial_mines;
-  counter.text = "剩余：" + Math.max(initial_mines - flagNumber, 0);
+  counter.text = $l10n("REMAIN") + Math.max(initial_mines - flagNumber, 0);
 }
 
 function showAllMines(selectedIndex) {
@@ -310,48 +309,48 @@ function showAllMines(selectedIndex) {
   $("matrix").data = data;
 }
 
-function init() {
+async function init() {
   $ui.render({
     props: {
-      title: "扫雷"
+      title: $l10n("TITLE")
     }
   });
-  $delay(0.3, () => {
-    $ui.menu({
-      items: ["初级", "中级", "高级"],
-      handler: (title, idx) => {
-        let mines, columns, rows;
-        switch (idx) {
-          case 0: {
-            mines = 10;
-            columns = 8;
-            rows = 8;
-            break;
-          }
-          case 1: {
-            mines = 25;
-            columns = 12;
-            rows = 12;
-            break;
-          }
-          case 2: {
-            mines = 35;
-            columns = 12;
-            rows = 12;
-            break;
-          }
-          default:
-            break;
-        }
-        const matrix = defineMatrix({ mines, columns, rows });
-        $ui.window.add(matrix);
-        const timer = defineTimer();
-        $ui.window.add(timer);
-        const counter = defineCounter(mines);
-        $ui.window.add(counter);
-      }
-    });
+  await $wait(0.7);
+  const { index } = await $ui.menu({
+    items: [$l10n("EASY"), $l10n("MEDIUM"), $l10n("HARD")]
   });
+  if (index === undefined) $app.close();
+  let mines, columns, rows;
+  switch (index) {
+    case 0: {
+      mines = 10;
+      columns = 8;
+      rows = 8;
+      break;
+    }
+    case 1: {
+      mines = 25;
+      columns = 12;
+      rows = 12;
+      break;
+    }
+    case 2: {
+      mines = 35;
+      columns = 12;
+      rows = 12;
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+
+  const matrix = defineMatrix({ mines, columns, rows });
+  $ui.window.add(matrix);
+  const timer = defineTimer();
+  $ui.window.add(timer);
+  const counter = defineCounter(mines);
+  $ui.window.add(counter);
 }
 
 module.exports = {

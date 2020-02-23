@@ -1,3 +1,10 @@
-"OK" = "OK";
-"DONE" = "Done";
-"HELLO_WORLD" = "Hello, World!";
+"TITLE" = "MineSweeper";
+"HARD" = "Hard";
+"MEDIUM" = "Medium";
+"EASY" = "Easy";
+"REMAIN" = "Remain: ";
+"TIME_USED" = "Time: ";
+"WIN" = "You win!";
+"LOSE" = "you lose!";
+"EXIT" = "Exit";
+"AGAIN" = "Again";

@@ -1,3 +1,10 @@
-"OK" = "好的";
-"DONE" = "完成";
-"HELLO_WORLD" = "你好，世界！";
+"TITLE" = "扫雷";
+"HARD" = "困难";
+"MEDIUM" = "中等";
+"EASY" = "简单";
+"REMAIN" = "剩余：";
+"TIME_USED" = "用时：";
+"WIN" = "你赢了！";
+"LOSE" = "你输了！";
+"EXIT" = "退出";
+"AGAIN" = "再来一局";
